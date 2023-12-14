@@ -1,0 +1,93 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+using namespace std;
+class Employee
+{
+	string name,designation;
+	int id;
+	double salary;
+	public:
+		Employee()
+		{
+			name="None";
+			id=0;
+			salary=0;
+			designation="None";
+		}
+		void accept(int x)
+		{
+		    cout<<"\n\tEnter Details of emplayee"<<x+1<<":";
+			cout<<"\n\tEnter the name of the employee: ";
+			cin>>name;
+			cout<<"\n\tEnter Designation of employee: ";
+			cin>>designation;
+			cout<<"\n\tEnter the employee id: ";
+			cin>>id;
+			cout<<"\n\tEnter the salary of the employee: ";
+			cin>>salary;
+		}
+
+		void display(int x)
+		{
+			cout<<"\n\t------ Details of the employee "<<x+1<<"------";
+			cout<<"\n\tName: "<<name;
+			cout<<"\n\tEmployee ID: "<<id;
+			cout<<"\n\tDesignation: "<<designation;
+			cout<<"\n\tSalary: "<<salary;
+
+		}
+};
+int main()
+{
+	int choice,i,n;
+	cout<<"\n\tWELCOME TO EMPLOYEE DATABASE";
+	cout<<"\n\tHow many employee record would you want to enter? : ";
+	cin>>n;
+	Employee obj[n];
+	ofstream fout;
+	ifstream fin;
+	do
+	{
+		cout<<"\n\t--------MENU--------";
+		cout<<"\n\t1.Write employee detail in file\n\t2.Read employee details in file\n\t3.EXIT";
+		cout<<"\n\tEnter your choice: ";
+		cin>>choice;
+		switch(choice)
+                       {
+			case 1:fout.open("Employee record.dat",ios::out);
+			       cout<<"\n\tEmployee file is opening for writing";
+			       cout<<"\n\tWrite Employee Information";
+			       for(i=0;i<n;i++)
+			       {
+			       	obj[i].accept(i);
+			       	fout.write((char *)&obj[i],sizeof(obj[i]));
+
+					 }
+					 cout<<"\n\tEmployee information accepted ";
+					 fout.close();
+					 cout<<"\n\tEmploayee file has been closed\n";
+					 break;
+		    case 2:fin.open("\nEmployee record.dat",ios::in);
+		           cout<<"\n\tEmployee file is opening for reading\n";
+		           for(i=0;i<n;i++)
+		           {
+		           	fin.read((char*)&obj[i],sizeof(obj[i]));
+		           	obj[i].display(i);
+
+				   }
+				   cout<<"\n\tEmployee information read successfully";
+				   fin.close();
+				   cout<<"\n\tEmployee Information \n";
+				   break;
+			case 3:cout<<"*****Exit*****";
+                                   break;
+		}
+		}while(choice!=3);
+
+			cout<<"\nEnd of the program ";
+			cout<<"\nThank you";
+			return 0;
+
+
+}
